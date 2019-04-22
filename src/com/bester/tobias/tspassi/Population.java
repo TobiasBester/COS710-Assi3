@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Population {
@@ -15,17 +16,42 @@ public class Population {
     private String problemName;
     private String comment;
     private int dimension;
+    private int numChromosomes;
+    private int numIterations;
     private List<String> coords;
     private List<City> cities;
+    private List<Chromosome> chromosomes;
 
-    Population(String problemName, boolean directRepresentation) {
+    Population(String problemName, int numChromosomes, int numIterations, boolean directRepresentation) {
         this.problemName = problemName;
+        this.numChromosomes = numChromosomes;
+        this.numIterations = numIterations;
+        this.chromosomes = new ArrayList<>();
         readDataFromFile(problemName);
         saveCities();
     }
 
     void startSearch() {
         System.out.println("Starting search");
+        IntStream.range(0, numIterations).forEach(idx -> {
+            System.out.println(String.format("Starting iteration %d", idx));
+            evaluatePopulation();
+        });
+    }
+
+    private void evaluatePopulation() {
+        IntStream.range(0, chromosomes.size()).forEach(cIdx -> {
+            System.out.println(String.format("Evaluating Chromosome %d", cIdx));
+            chromosomes.get(cIdx).evaluate();
+        });
+    }
+
+    void createInitialPopulation() {
+        System.out.println(String.format("Creating Initial Population of %d chromosomes", numChromosomes));
+        IntStream.range(0, numChromosomes).forEach(cIdx -> {
+            System.out.println(String.format("Creating chromosome number %d", cIdx));
+            chromosomes.add(new Chromosome(cities));
+        });
     }
 
     private void saveCities() {

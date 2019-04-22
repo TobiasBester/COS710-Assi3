@@ -5,10 +5,11 @@ import javafx.util.Pair;
 public class City {
 
     private int index;
+
     private Double x;
+
     private Double y;
     private Pair<Double, Double> coords;
-
     public City(int index, Double x, Double y) {
         this.index = index;
         this.x = x;
@@ -26,5 +27,13 @@ public class City {
     @Override
     public String toString() {
         return String.format("%n- City %d: (%f, %f)", index, x, y);
+    }
+
+    public Double getX() {
+        return x;
+    }
+
+    public Double getY() {
+        return y;
     }
 }
