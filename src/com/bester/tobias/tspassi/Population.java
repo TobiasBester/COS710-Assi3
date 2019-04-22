@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -31,27 +29,54 @@ public class Population {
         saveCities();
     }
 
-    void startSearch() {
+    void createInitialPopulation() {
+        System.out.println(String.format("Creating Initial Population of %d chromosomes", numChromosomes));
+        IntStream.range(0, numChromosomes).forEach(cIdx -> {
+            System.out.println(String.format("Creating chromosome number %d", cIdx));
+            chromosomes.add(new Chromosome(cIdx, cities));
+        });
+    }
+
+    void startSearch(int tournamentSize) {
         System.out.println("Starting search");
         IntStream.range(0, numIterations).forEach(idx -> {
             System.out.println(String.format("Starting iteration %d", idx));
             evaluatePopulation();
+            List<Chromosome> parents = selectParents(tournamentSize);
+            System.out.println("Parents");
+            System.out.println(parents);
+            applyOperators();
         });
     }
 
     private void evaluatePopulation() {
         IntStream.range(0, chromosomes.size()).forEach(cIdx -> {
-            System.out.println(String.format("Evaluating Chromosome %d", cIdx));
+            System.out.println(String.format(
+                    "Evaluating Chromosome %d: %f",
+                    chromosomes.get(cIdx).getId(),
+                    chromosomes.get(cIdx).evaluate()));
             chromosomes.get(cIdx).evaluate();
         });
     }
 
-    void createInitialPopulation() {
-        System.out.println(String.format("Creating Initial Population of %d chromosomes", numChromosomes));
-        IntStream.range(0, numChromosomes).forEach(cIdx -> {
-            System.out.println(String.format("Creating chromosome number %d", cIdx));
-            chromosomes.add(new Chromosome(cities));
-        });
+    private List<Chromosome> selectParents(int tSize) {
+
+        return IntStream.range(0, chromosomes.size())
+                .mapToObj(value -> tournamentSelection(tSize))
+                .collect(Collectors.toList());
+
+    }
+
+    private Chromosome tournamentSelection(int tSize) {
+        List<Chromosome> tournament = new ArrayList<>(chromosomes);
+        Collections.shuffle(tournament);
+        tournament = tournament.subList(0, tSize);
+        Optional<Chromosome> chromosome = tournament.stream().min(Comparator.comparing(Chromosome::evaluate));
+        return chromosome.orElse(chromosomes.get(0));
+    }
+
+    private void applyOperators() {
+        
     }
 
     private void saveCities() {

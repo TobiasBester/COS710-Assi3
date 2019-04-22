@@ -17,7 +17,7 @@ public class City {
         this.coords = new Pair<>(x, y);
     }
 
-    public City(String index, String x, String y) {
+    City(String index, String x, String y) {
         this.index = Integer.valueOf(index);
         this.x = Double.valueOf(x);
         this.y = Double.valueOf(y);
@@ -29,11 +29,11 @@ public class City {
         return String.format("%n- City %d: (%f, %f)", index, x, y);
     }
 
-    public Double getX() {
+    Double getX() {
         return x;
     }
 
-    public Double getY() {
+    Double getY() {
         return y;
     }
 }

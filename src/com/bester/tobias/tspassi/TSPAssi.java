@@ -7,10 +7,13 @@ public class TSPAssi {
 
         String problemName = "st70";
         boolean directRepresentation = true;
+        int numChromosomes = 10;
+        int numIterations = 1;
+        int tournamentSize = 4;
 
-        Population population = new Population(problemName, 8, 1, directRepresentation);
+        Population population = new Population(problemName, numChromosomes, numIterations, directRepresentation);
         population.createInitialPopulation();
-        population.startSearch();
+        population.startSearch(tournamentSize);
     }
 
 }

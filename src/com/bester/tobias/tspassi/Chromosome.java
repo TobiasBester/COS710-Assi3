@@ -6,10 +6,13 @@ import java.util.stream.IntStream;
 
 public class Chromosome {
 
+    private final int id;
     private List<City> cities;
+
     private Double currentFitness = Double.POSITIVE_INFINITY;
 
-    public Chromosome(List<City> cities) {
+    Chromosome(int id, List<City> cities) {
+        this.id = id;
         this.cities = new ArrayList<>(cities);
         randomizeCities();
         evaluate();
@@ -22,7 +25,6 @@ public class Chromosome {
                 .map(sum -> sum + findDistanceBetweenFirstAndLastCity());
 
         currentFitness = fitness.orElse(Double.POSITIVE_INFINITY);
-        System.out.println(currentFitness);
         return currentFitness;
     }
 
@@ -42,9 +44,17 @@ public class Chromosome {
 
     @Override
     public String toString() {
-        return "Chromosome{" +
-                "cities=" + cities +
+        return "\nChromosome{" +
+                "id=" + id +
                 ", currentFitness=" + currentFitness +
                 '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public Double getCurrentFitness() {
+        return currentFitness;
     }
 }
