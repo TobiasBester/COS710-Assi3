@@ -10,10 +10,11 @@ public class TSPAssi {
         int numChromosomes = 10;
         int numIterations = 1;
         int tournamentSize = 4;
+        double mutationProbability = 0.20;
 
         Population population = new Population(problemName, numChromosomes, numIterations, directRepresentation);
         population.createInitialPopulation();
-        population.startSearch(tournamentSize);
+        population.startSearch(tournamentSize, mutationProbability);
     }
 
 }

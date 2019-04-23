@@ -37,7 +37,7 @@ public class Population {
         });
     }
 
-    void startSearch(int tournamentSize) {
+    void startSearch(int tournamentSize, double mutationProbability) {
         System.out.println("Starting search");
         IntStream.range(0, numIterations).forEach(idx -> {
             System.out.println(String.format("Starting iteration %d", idx));
@@ -45,14 +45,14 @@ public class Population {
             List<Chromosome> parents = selectParents(tournamentSize);
             System.out.println("Parents");
             System.out.println(parents);
-            applyOperators();
+            chromosomes = applyOperators(parents, mutationProbability);
         });
     }
 
     private void evaluatePopulation() {
         IntStream.range(0, chromosomes.size()).forEach(cIdx -> {
             System.out.println(String.format(
-                    "Evaluating Chromosome %d: %f",
+                    "Evaluating Chromosome %d: %d",
                     chromosomes.get(cIdx).getId(),
                     chromosomes.get(cIdx).evaluate()));
             chromosomes.get(cIdx).evaluate();
@@ -60,7 +60,6 @@ public class Population {
     }
 
     private List<Chromosome> selectParents(int tSize) {
-
         return IntStream.range(0, chromosomes.size())
                 .mapToObj(value -> tournamentSelection(tSize))
                 .collect(Collectors.toList());
@@ -75,8 +74,66 @@ public class Population {
         return chromosome.orElse(chromosomes.get(0));
     }
 
-    private void applyOperators() {
-        
+    private List<Chromosome> applyOperators(List<Chromosome> chromosomes, double mutationProb) {
+        int targetSize = chromosomes.size();
+        List<Chromosome> newGen = new ArrayList<>();
+        float r = new Random().nextFloat();
+
+        while (!chromosomes.isEmpty()) {
+            if (chromosomes.size() > 1 && r > mutationProb) {
+                List<Chromosome> selected = getTwoRandomChromosomesFromList(chromosomes);
+                newGen.addAll(crossover(selected.get(0), selected.get(1)));
+            } else {
+                Chromosome selected = getRandomChromosomeFromList(chromosomes);
+                newGen.add(mutation(selected));
+            }
+        }
+
+        assert newGen.size() == targetSize;
+
+        return newGen;
+    }
+
+    private Chromosome mutation(Chromosome chromosome) {
+        int[] indexes =  chromosome.getTwoRandomIndexes();
+        int idx1 = indexes[0];
+        int idx2 = indexes[1];
+        Chromosome result = new Chromosome(chromosome);
+        Collections.swap(result.getCities(), idx1, idx2);
+        return result;
+    }
+
+    private List<Chromosome> crossover(Chromosome chromosome1, Chromosome chromosome2) {
+        int[] indexes =  chromosome1.getTwoRandomIndexes();
+        int idx1 = indexes[0];
+        int idx2 = indexes[1];
+        Chromosome result1 = new Chromosome(chromosome1);
+        Chromosome result2 = new Chromosome(chromosome2);
+
+        // Swaperoni
+        result1.getCities().set(idx1, chromosome1.getCities().get(idx2));
+        result2.getCities().set(idx2, chromosome2.getCities().get(idx1));
+
+        List<Chromosome> results = new ArrayList<>();
+        results.add(result1);
+        results.add(result2);
+        return results;
+    }
+
+    private Chromosome getRandomChromosomeFromList(List<Chromosome> list) {
+        Chromosome result = list.get(new Random().nextInt(list.size()));
+        list.remove(result);
+        return result;
+    }
+
+    private List<Chromosome> getTwoRandomChromosomesFromList(List<Chromosome> list) {
+        List<Chromosome> result = new ArrayList<>();
+        Chromosome chromosome1 = getRandomChromosomeFromList(list);
+        Chromosome chromosome2 = getRandomChromosomeFromList(list);
+
+        result.add(chromosome1);
+        result.add(chromosome2);
+        return result;
     }
 
     private void saveCities() {
