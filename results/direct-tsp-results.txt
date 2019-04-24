@@ -1,0 +1,56 @@
+10000 Iterations, 20 Chromosomes, 4 Tournament Size, 0.7 Prob
+841, 746, 862, 949, 807 - 841
+10000 Iterations, 30 Chromosomes, 4 Tournament Size, 0.7 Mutation Prob
+788, 868, 974, 825, 866 - 864
+2500 Iterations, 30 Chromosomes, 4 Tournament Size, 0.7 Mutation Prob
+887, 870, 884, 835, 936 - 882
+10000 Iterations, 30 Chromosomes, 5 Tournament Size, 0.65 Mutation Prob
+854, 989, 922, 934, 891 - 918
+2500 Iterations, 30 Chromosomes, 4 Tournament Size, 0.5 Mutation Prob
+912, 924, 1013, 934, 976 - 952
+2500 Iterations, 30 Chromosomes, 4 Tournament Size, 0.55 Mutation Prob
+955, 970, 901, 995, 1062 - 977
+2500 Iterations, 30 Chromosomes, 4 Tournament Size, 0.5 Mutation Prob
+986, 1006, 911, 1013, 975 - 978
+2500 Iterations, 30 Chromosomes, 4 Tournament Size, 0.4 Mutation Prob
+939, 1014, 1018, 1021, 921 - 983
+1000 Iterations, 30 Chromosomes, 4 Tournament Size, 0.6 Mutation Prob
+1071, 1155, 900, 951, 1097 - 1035
+2500 Iterations, 30 Chromosomes, 4 Tournament Size, 0.3 Mutation Prob
+1001, 1147, 1015, 1117, 1020 - 1060
+1000 Iterations, 30 Chromosomes, 5 Tournament Size, 0.6 Mutation Prob
+1088, 1117, 929, 1127, 1042 - 1061
+1000 Iterations, 30 Chromosomes, 6 Tournament Size, 0.4 Mutation Prob
+1127, 973, 1095, 1103, 1094 - 1078
+1000 Iterations, 30 Chromosomes, 5 Tournament Size, 0.5 Mutation Prob
+1186, 1104, 1157, 1011, 1017 - 1095
+1000 Iterations, 30 Chromosomes, 4 Tournament Size, 0.4 Mutation Prob
+1085, 1199, 1017, 1092, 1152 - 1109
+1000 Iterations, 30 Chromosomes, 5 Tournament Size, 0.3 Mutation Prob
+1174, 1044, 1104, 1129, 1132 - 1117
+1000 Iterations, 30 Chromosomes, 6 Tournament Size, 0.5 Mutation Prob
+1143, 1215, 1091, 1133, 1012 - 1119
+2500 Iterations, 30 Chromosomes, 4 Tournament Size, 0.1 Mutation Prob
+1074, 1104, 1060, 1107, 1266 - 1122
+1000 Iterations, 30 Chromosomes, 6 Tournament Size, 0.6 Mutation Prob
+1130, 1210, 1174, 1151, 1047 - 1142
+1000 Iterations, 30 Chromosomes, 5 Tournament Size, 0.4 Mutation Prob
+1065, 1275, 1127, 1137, 1135 - 1148
+1000 Iterations, 30 Chromosomes, 6 Tournament Size, 0.3 Mutation Prob
+1293, 1233, 1033, 1148, 1089 - 1159
+1000 Iterations, 30 Chromosomes, 5 Tournament Size, 0.2 Mutation Prob
+1057, 1320, 1089, 1107, 1243 - 1163
+1000 Iterations, 30 Chromosomes, 6 Tournament Size, 0.2 Mutation Prob
+1172, 1045, 1190, 1216, 1299 - 1184
+1000 Iterations, 30 Chromosomes, 5 Tournament Size, 0.1 Mutation Prob
+1216, 1224, 1157, 1391, 1185 - 1235
+1000 Iterations, 30 Chromosomes, 4 Tournament Size, 0.2 Mutation Prob
+1251, 1270, 1326, 1151, 1328 - 1265
+2500 Iterations, 30 Chromosomes, 6 Tournament Size, 0.7 Mutation Prob
+1122, 949, 889, 913, 975 - 970
+2500 Iterations, 30 Chromosomes, 6 Tournament Size, 0.5 Mutation Prob
+1043, 1031, 1222, 947, 987 - 1046
+2500 Iterations, 30 Chromosomes, 6 Tournament Size, 0.3 Mutation Prob
+1111, 1094, 1158, 1005, 1055 - 1085
+2500 Iterations, 30 Chromosomes, 6 Tournament Size, 0.1 Mutation Prob
+1077, 1093, 1068, 1060, 1069 - 1073

@@ -9,10 +9,12 @@ public class Chromosome {
     private List<City> cities;
     private Integer currentFitness = Integer.MAX_VALUE;
 
-    Chromosome(int id, List<City> cities) {
+    Chromosome(int id, List<City> cities, boolean shuffleCities) {
         this.id = id;
         this.cities = new ArrayList<>(cities);
-        randomizeCities();
+        if (shuffleCities) {
+            randomizeCities();
+        }
         evaluate();
     }
 
@@ -32,19 +34,18 @@ public class Chromosome {
         return currentFitness;
     }
 
-    public int getRandomIndex() {
-        return new Random().nextInt() * cities.size();
-    }
-
-    public int[] getTwoRandomIndexes() {
+    int[] getTwoRandomIndexes() {
         Random r = new Random();
-        int idx1 = r.nextInt() * cities.size();
-        int idx2 = r.nextInt() * cities.size();
-        while (idx1 != idx2) {
-            idx2 = r.nextInt() * cities.size();
+        int idx1 = r.nextInt(cities.size());
+        int idx2 = r.nextInt(cities.size());
+        while (idx1 == idx2) {
+            idx2 = r.nextInt(cities.size());
         }
 
-        return new int[]{idx1, idx2};
+        int[] result = new int[]{idx1, idx2};
+        Arrays.sort(result);
+
+        return result;
     }
 
     private void randomizeCities() {
@@ -60,7 +61,7 @@ public class Chromosome {
     private Integer findDistanceBetweenCities(City city1, City city2) {
         double xd = city1.getX() - city2.getX();
         double yd = city1.getY() - city2.getY();
-        return Math.round((float) Math.sqrt(xd * xd + yd * yd));
+        return Math.round((float) Math.sqrt((xd * xd) + (yd * yd)));
     }
 
     @Override
@@ -71,15 +72,19 @@ public class Chromosome {
                 '}';
     }
 
-    int getId() {
+    private int getId() {
         return id;
     }
 
-    public Integer getCurrentFitness() {
+    Integer getCurrentFitness() {
         return currentFitness;
     }
 
-    public List<City> getCities() {
+    List<City> getCities() {
         return cities;
+    }
+
+    public void setCities(List<City> cities) {
+        Collections.copy(cities, this.cities);
     }
 }
