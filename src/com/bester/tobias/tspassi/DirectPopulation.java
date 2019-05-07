@@ -18,21 +18,21 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class Population {
+public class DirectPopulation {
 
-    private String problemName;
-    private String comment;
-    private int dimension;
-    private int numChromosomes;
-    private int numIterations;
-    private List<String> coords;
-    private List<City> cities;
+    protected String problemName;
+    protected String comment;
+    protected int dimension;
+    protected int numChromosomes;
+    protected int numIterations;
+    protected List<String> coords;
+    protected List<City> cities;
     private List<Chromosome> chromosomes;
 
-    private List<Number> averageFitnessHistory = new ArrayList<>();
-    private List<Number> bestFitnessHistory = new ArrayList<>();
+    protected List<Number> averageFitnessHistory = new ArrayList<>();
+    protected List<Number> bestFitnessHistory = new ArrayList<>();
 
-    Population(String problemName, int numChromosomes, int numIterations, boolean directRepresentation) {
+    DirectPopulation(String problemName, int numChromosomes, int numIterations) {
         this.problemName = problemName;
         this.numChromosomes = numChromosomes;
         this.numIterations = numIterations;
@@ -42,7 +42,7 @@ public class Population {
     }
 
     void createInitialPopulation() {
-        System.out.println(String.format("Creating Initial Population of %d chromosomes", numChromosomes));
+        System.out.println(String.format("Creating Initial DirectPopulation of %d chromosomes", numChromosomes));
         IntStream.range(0, numChromosomes).forEach(cIdx -> chromosomes.add(new Chromosome(cIdx, cities, true)));
     }
 
@@ -61,8 +61,10 @@ public class Population {
     }
 
     void printHistory() {
-        System.out.println("Average Fitness: " + averageFitnessHistory);
-        System.out.println("Best fitness: " + bestFitnessHistory);
+        System.out.format("Average Fitness: %s%n", averageFitnessHistory);
+        System.out.format("Best fitness: %s%n", bestFitnessHistory);
+        System.out.format("Global best fitness: %s%n",
+                bestFitnessHistory.stream().min(Comparator.comparing(Number::intValue)).orElse(99999));
     }
 
     void printAverageFitnessGraph() {
@@ -96,7 +98,7 @@ public class Population {
         stage.show();
     }
 
-    private Integer calculateBestFitness() {
+    protected Integer calculateBestFitness() {
         Optional<Integer> lowest = chromosomes.stream()
                 .map(Chromosome::getCurrentFitness)
                 .min(Integer::compareTo);
@@ -104,7 +106,7 @@ public class Population {
         return lowest.orElse(9999);
     }
 
-    private float calculateAverageFitness() {
+    protected float calculateAverageFitness() {
         Optional<Integer> sum = chromosomes.stream()
                 .map(Chromosome::getCurrentFitness)
                 .reduce(Integer::sum);
@@ -112,21 +114,14 @@ public class Population {
         return sum.orElse(0) / ((float) chromosomes.size());
     }
 
-    private void evaluatePopulation() {
-        IntStream.range(0, chromosomes.size()).forEach(cIdx -> {
-//            System.out.format(
-//                    "Evaluating Chromosome %d: %d%n",
-//                    chromosomes.get(cIdx).getId(),
-//                    chromosomes.get(cIdx).evaluate());
-            chromosomes.get(cIdx).evaluate();
-        });
+    protected void evaluatePopulation() {
+        IntStream.range(0, chromosomes.size()).forEach(cIdx -> chromosomes.get(cIdx).evaluate());
     }
 
     private List<Chromosome> selectParents(int tSize) {
         return IntStream.range(0, chromosomes.size())
                 .mapToObj(value -> tournamentSelection(tSize))
                 .collect(Collectors.toList());
-
     }
 
     private Chromosome tournamentSelection(int tSize) {
@@ -161,7 +156,6 @@ public class Population {
     }
 
     private Chromosome mutation(Chromosome chromosome, int idCounter) {
-//        System.out.format("Performing mutation on %d%n", chromosome.getId());
 
         int[] indexes =  chromosome.getTwoRandomIndexes();
         int idx1 = indexes[0];
@@ -173,9 +167,6 @@ public class Population {
     }
 
     private List<Chromosome> crossover(Chromosome chromosome1, int id1, Chromosome chromosome2, int id2) {
-//        System.out.format("Performing crossover between %d and %d%n",
-//                chromosome1.getId(),
-//                chromosome2.getId());
 
         int[] indexes =  chromosome1.getTwoRandomIndexes();
         int idx1 = indexes[0];
